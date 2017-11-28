@@ -1,1 +1,1 @@
-web:	python mon-apigee_teresa.py
+web:	python mon-apigee.py
