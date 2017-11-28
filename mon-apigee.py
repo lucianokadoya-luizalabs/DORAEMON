@@ -13,6 +13,24 @@ from influxdb import InfluxDBClient
 org_tmp1 = os.environ['org1']
 org_tmp2 = os.environ['org2']
 
+def mount_json(a):
+	result = (json_data[n-1]['metrics'][a]['values'][0])
+	result2 = (json_data[n-1]['name'])
+	print(result, result2)
+
+	# mount json1
+	mount_json.json_body = [
+	{
+		"measurement": os.environ['slc0'],
+		"tags": {
+			"proxy": result2
+		},
+		"fields": {
+			"value": result
+		}
+	}
+	]
+	
 # Looping
 while True:
 
@@ -31,84 +49,47 @@ while True:
 	# mount url's 
 	data_begin = str("timeRange=" + begin.strftime("%m/%d/%Y") + "%20" + begin.strftime("%H:%M"))
 	data_end = str(end.strftime("%m/%d/%Y") + "%20" + end.strftime("%H:%M"))
-	url1 = urllib.parse.urljoin(os.environ['url_bgn'], org + os.environ['url_mdn']) + os.environ['slc1'] + os.environ['url_end'] + str(data_begin) + "~" + str(data_end)
-	url2 = urllib.parse.urljoin(os.environ['url_bgn'], org + os.environ['url_mdn']) + os.environ['slc2'] + os.environ['url_end'] + data_begin + "~" + str(data_end)
-	print(url1)
-	print(url2)
 
-	# API connection
-	url_1 = urllib.request.Request(url1)
-	url_1.add_header("Authorization", "Basic %s" % os.environ['pass_api'])
-	url_2 = urllib.request.Request(url2)
-	url_2.add_header("Authorization", "Basic %s" % os.environ['pass_api'])
+	url_begin = urllib.parse.urljoin(os.environ['url_bgn'], org + os.environ['url_mdn'])
+	url_end = os.environ['url_end'] + data_begin + "~" + data_end
 
-	try:
-		r = urllib.request.urlopen(url_1)
-		data = simplejson.load(r)
-	except urllib.error.HTTPError as err:
-		print("except ERROR =", err)
-		continue
-	try:
-		r2 = urllib.request.urlopen(url_2)
-		data2 = simplejson.load(r2)
-	except urllib.error.HTTPError as err:
-		print("except ERROR =", err)
-		continue
-	json_data = data['environments'][0]['dimensions']
-	json_data2 = data2['environments'][0]['dimensions']
-	
-	# Find the total of the Itens
-	n = sum(1 for line in json_data)
+	for i in range(2):
+		slc3 = 'slc' + str(i)
+		env = os.environ[slc3]
+		url = url_begin + env + url_end
+		print(url)
 
-	while n > 0 :
+		# API connection
+		url_1 = urllib.request.Request(url)
+		url_1.add_header("Authorization", "Basic %s" % os.environ['pass_api'])
+
 		try:
-			# parse results
-			result = (json_data[n-1]['metrics'][1]['values'][0])
-			result2 = (json_data[n-1]['name'])
-			print(result, result2)
+			r = urllib.request.urlopen(url_1)
+			data = simplejson.load(r)
+		except urllib.error.HTTPError as err:
+			print("except ERROR =", err)
+			continue
 
-			# mount json1
-			json_body = [
-			{
-				"measurement": os.environ['slc1'],
-				"tags": {
-					"proxy": result2
-				},
-				"fields": {
-					"value": result
-				}
-			}
-			]
+		json_data = data['environments'][0]['dimensions']
 
-			result3 = (json_data2[n-1]['metrics'][0]['values'][0])
-			print(result3, result2)
+	
+		# Find the total of the Itens
+		n = sum(1 for line in json_data)
 
-			json_body2 = [
-			{
-				"measurement": os.environ['slc2'],
-				"tags": {
-					"proxy2": result2
-				},
-				"fields": {
-					"value2": result3
-				}
-			}
-			]
+		while n > 0 :
+
+			if os.environ[slc3] == os.environ['slc0']:
+				mount_json(1)
+			else:
+				mount_json(0)
 
 			# input data to database
 			client = InfluxDBClient(host=os.environ['host_db'], port=os.environ['port_db'], database=os.environ['base_db'])
 			client.create_database(os.environ['base_db'])
-			client.write_points(json_body)
-			client.write_points(json_body2)
+			client.write_points(mount_json.json_body)
 
-		except urllib.error.HTTPError as err:
-
-			if err.code == 500:
-				print("Error = ", err)
-				continue
-
-		# Pass to the next Item
-		n-=1
+			# Pass to the next Item
+			n-=1
 
 	# Time wait until the next search
 	time.sleep(float(os.environ['delay']))
