@@ -13,15 +13,15 @@ from influxdb import InfluxDBClient
 org_tmp1 = os.environ['org1']
 org_tmp2 = os.environ['org2']
 
-def mount_json(a):
+def mount_json(a, b):
 	result = (json_data[n-1]['metrics'][a]['values'][0])
 	result2 = (json_data[n-1]['name'])
 	print(result, result2)
 
 	# mount json1
-	mount_json.json_body = [
+	mount_json.body = [
 	{
-		"measurement": os.environ['slc0'],
+		"measurement": b,
 		"tags": {
 			"proxy": result2
 		},
@@ -79,14 +79,14 @@ while True:
 		while n > 0 :
 
 			if os.environ[slc3] == os.environ['slc0']:
-				mount_json(1)
+				mount_json(1, os.environ['slc0'])
 			else:
-				mount_json(0)
+				mount_json(0, os.environ['slc1'])
 
 			# input data to database
 			client = InfluxDBClient(host=os.environ['host_db'], port=os.environ['port_db'], database=os.environ['base_db'])
 			client.create_database(os.environ['base_db'])
-			client.write_points(mount_json.json_body)
+			client.write_points(mount_json.body)
 
 			# Pass to the next Item
 			n-=1
