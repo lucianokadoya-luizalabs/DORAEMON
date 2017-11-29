@@ -6,6 +6,7 @@ import ssl
 import ast
 import time
 import datetime
+import sys
 
 # Import DB package
 from influxdb import InfluxDBClient
@@ -41,10 +42,10 @@ while True:
 
 	# calcule time range
 	today = datetime.datetime.now()
-	d1 = datetime.timedelta(minutes=15)
-	d2 = datetime.timedelta(minutes=10)
-	begin = today - d1
-	end = today - d2
+	d1 = datetime.timedelta(minutes=-15)
+	d2 = datetime.timedelta(minutes=-10)
+	begin = today + d1
+	end = today + d2
 
 	# mount url's 
 	data_begin = str("timeRange=" + begin.strftime("%m/%d/%Y") + "%20" + begin.strftime("%H:%M"))
@@ -66,8 +67,8 @@ while True:
 		try:
 			r = urllib.request.urlopen(url_1)
 			data = simplejson.load(r)
-		except urllib.error.HTTPError as err:
-			print("except ERROR =", err)
+		except :
+			print("Unexpected error:", sys.exc_info()[0])
 			continue
 
 		json_data = data['environments'][0]['dimensions']
@@ -78,14 +79,14 @@ while True:
 
 		while n > 0 :
 
-			if os.environ[slc3] == os.environ['slc0']:
+			if env == os.environ['slc0']:
 				mount_json(1, os.environ['slc0'])
 			else:
 				mount_json(0, os.environ['slc1'])
 
 			# input data to database
 			client = InfluxDBClient(host=os.environ['host_db'], port=os.environ['port_db'], database=os.environ['base_db'])
-			client.create_database(os.environ['base_db'])
+			#client.create_database(os.environ['base_db'])
 			client.write_points(mount_json.body)
 
 			# Pass to the next Item
