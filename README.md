@@ -17,7 +17,7 @@ To run the application you will need the follows variables enviroments:
 	11. org2=organization 1
 	12. org1=organization 2
 
-To configura Influxdb Database
+To configure Influxdb Database
 
 	1. Logon on server type `influx`
 	2. `CREATE DATABASE <database name>`
