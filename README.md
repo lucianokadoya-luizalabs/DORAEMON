@@ -17,4 +17,11 @@ To run the application you will need the follows variables enviroments:
 	11. org2=organization 1
 	12. org1=organization 2
 
+To configura Influxdb Database
+
+	1. Logon on server type `influx`
+	2. `CREATE DATABASE <database name>`
+	3. `CREATE RETENTION POLICY ,retetion policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
+
+
 
