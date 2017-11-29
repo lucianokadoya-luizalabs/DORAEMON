@@ -21,7 +21,7 @@ To configure Influxdb Database
 
 	1. Logon on server type `influx`
 	2. `CREATE DATABASE <database name>`
-	3. `CREATE RETENTION POLICY ,retetion policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
+	3. `CREATE RETENTION POLICY ,retention policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
 
 
 
