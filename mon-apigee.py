@@ -24,7 +24,8 @@ def mount_json(a, b):
 	{
 		"measurement": b,
 		"tags": {
-			"proxy": result2
+			"proxy": result2,
+			"org": org
 		},
 		"fields": {
 			"value": result
@@ -58,6 +59,7 @@ while True:
 		slc3 = 'slc' + str(i)
 		env = os.environ[slc3]
 		url = url_begin + env + url_end
+		print(org)
 		print(url)
 
 		# API connection
