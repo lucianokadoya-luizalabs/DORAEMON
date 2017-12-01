@@ -15,7 +15,7 @@ org_tmp1 = os.environ['org1']
 org_tmp2 = os.environ['org2']
 
 def mount_json(a, b):
-	result = (json_data[n-1]['metrics'][a]['values'][0])
+	result = float(json_data[n-1]['metrics'][a]['values'][0])
 	result2 = (json_data[n-1]['name'])
 	print(result, result2)
 
