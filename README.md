@@ -2,7 +2,7 @@
 
 MON-APIGEE is a application to monitoring the Proxies Response Time from APIGEE.
 
-[![Doraemon](logo.png)](http://epic-rap-battles-of-cartoons.wikia.com/wiki/File:Doraemon.png)
+[![Doraemon](logo.png)](https://vignette.wikia.nocookie.net/doraemon/images/0/01/1686742-tumblr_l6pwth0gox1qcp8iro1_400.png/revision/latest?cb=20140808054837&path-prefix=en)
 
 To run the application you will need the follows variables enviroments:
 
