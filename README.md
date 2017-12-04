@@ -35,17 +35,18 @@ To install Grafana on Debian
 	curl https://packagecloud.io/gpg.key | sudo apt-key add -
 	Update your Apt repositories and install Grafana
 
-	`sudo apt-get update`
-	`sudo apt-get install grafana`
+		`sudo apt-get update`
+		`sudo apt-get install grafana`
+		
 	- On some older versions of Ubuntu and Debian you may need to install the apt-transport-https package which is needed to fetch packages over HTTPS.
 
-	`sudo apt-get install -y apt-transport-https`
+		`sudo apt-get install -y apt-transport-https`
 
 To configure Influxdb Database
 
 	- Logon on server type `influx`
-	- `CREATE DATABASE <database name>`
-	- `CREATE RETENTION POLICY <retention policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
+		`CREATE DATABASE <database name>`
+		`CREATE RETENTION POLICY <retention policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
 
 
 
