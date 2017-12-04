@@ -40,7 +40,7 @@ To install Grafana on Debian
 
 	- On some older versions of Ubuntu and Debian you may need to install the apt-transport-https package which is needed to fetch packages over HTTPS.
 
-		`sudo apt-get install -y apt-transport-https`
+		sudo apt-get install -y apt-transport-https
 
 To configure Influxdb Database
 
