@@ -4,18 +4,18 @@ MON-APIGEE is a application to monitoring the Proxies Response Time from APIGEE.
 
 To run the application you will need the follows variables enviroments:
 
-    1. scl0=total_response_time
-	2. scl1=target_response_time
-	3. url_bgn=https://api.enterprise.apigee.com/v1/o/
-	4. url_mdn=/environments/prod/stats/apiproxy?select=avg(
-	5. url_end=)&realtime=true&accuracy=0&timeUnit=minute&
-	6. pass_api=(token to mgnt APIGEE)
-	7. delay=15 (time wait until next interation)
-	8. base_db=apigee (database name)
-	9. host_db=localhost (database addrress)
-	10. port_db=8086 (database tcp port)
-	11. org2=organization 1
-	12. org1=organization 2
+    1. SCL0=total_response_time
+	2. SLC1=target_response_time
+	3. URL_BGN_bgn=https://api.enterprise.apigee.com/v1/o/
+	4. URL_MDN=/environments/prod/stats/apiproxy?select=avg(
+	5. URL_END=)&realtime=true&accuracy=0&timeUnit=minute&
+	6. PASS_API=(token to mgnt APIGEE)
+	7. DELAY=15 (time wait until next interation)
+	8. BASE_DB=apigee (database name)
+	9. HOST_DB=localhost (database addrress)
+	10. PORT_DB=8086 (database tcp port)
+	11. ORG2=organization 1
+	12. ORG1=organization 2
 
 To configure Influxdb Database
 
