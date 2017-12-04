@@ -22,11 +22,30 @@ To run the application you will need the follows variables enviroments:
 	11. ORG2=organization 1
 	12. ORG1=organization 2
 
+To install Grafana on Debian
+
+	- Add the following line to your /etc/apt/sources.list file.
+
+	deb https://packagecloud.io/grafana/stable/debian/ jessie main
+	Use the above line even if you are on Ubuntu or another Debian version. There is also a testing repository if you want beta or release candidates.
+
+	deb https://packagecloud.io/grafana/testing/debian/ jessie main
+	Then add the Package Cloud key. This allows you to install signed packages.
+
+	curl https://packagecloud.io/gpg.key | sudo apt-key add -
+	Update your Apt repositories and install Grafana
+
+	`sudo apt-get update`
+	`sudo apt-get install grafana`
+	- On some older versions of Ubuntu and Debian you may need to install the apt-transport-https package which is needed to fetch packages over HTTPS.
+
+	`sudo apt-get install -y apt-transport-https`
+
 To configure Influxdb Database
 
-	1. Logon on server type `influx`
-	2. `CREATE DATABASE <database name>`
-	3. `CREATE RETENTION POLICY <retention policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
+	- Logon on server type `influx`
+	- `CREATE DATABASE <database name>`
+	- `CREATE RETENTION POLICY <retention policy name> ON <database name> DURATION <time retention> REPLICATION 1 DEFAULT`
 
 
 
