@@ -1,6 +1,6 @@
-# DORAEMON
+# Doraemon
 
-DORAEMON is a application to monitoring the Proxies Response Time from APIGEE.
+Doraemon is a application to monitoring the Proxies Response Time from APIGEE.
 
 <p align="center">
   <img width="500px" src="Doraemon.png" alt='Doraemon'>
