@@ -15,9 +15,13 @@ org_tmp1 = os.environ['org1']
 org_tmp2 = os.environ['org2']
 
 def mount_json(a, b):
-	result = float(json_data[n-1]['metrics'][a]['values'][0])
-	result2 = (json_data[n-1]['name'])
-	print(result, result2)
+	try:
+		result = float(json_data[n-1]['metrics'][a]['values'][0])
+		result2 = (json_data[n-1]['name'])
+		#print(result, result2)
+	except :
+		print("Unexpected error:", sys.exc_info()[0])
+		#continue
 
 	# mount json1
 	mount_json.body = [
@@ -43,8 +47,8 @@ while True:
 
 	# calcule time range
 	today = datetime.datetime.now()
-	d1 = datetime.timedelta(minutes=-15)
-	d2 = datetime.timedelta(minutes=-10)
+	d1 = datetime.timedelta(minutes=-17)
+	d2 = datetime.timedelta(minutes=-12)
 	begin = today + d1
 	end = today + d2
 
@@ -59,7 +63,7 @@ while True:
 		slc3 = 'slc' + str(i)
 		env = os.environ[slc3]
 		url = url_begin + env + url_end
-		print(org)
+		#print(org)
 		print(url)
 
 		# API connection
@@ -69,11 +73,10 @@ while True:
 		try:
 			r = urllib.request.urlopen(url_1)
 			data = simplejson.load(r)
+			json_data = data['environments'][0]['dimensions']
 		except :
 			print("Unexpected error:", sys.exc_info()[0])
 			continue
-
-		json_data = data['environments'][0]['dimensions']
 
 	
 		# Find the total of the Itens
